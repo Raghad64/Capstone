@@ -23,7 +23,7 @@ let correctProof = {
         beforeEach(async function(){
             this.Verifier = await Verifier.new({from: account_one});
 
-            this.contract = await SolnSquareVerifier.new(Verifier.address,'token1', 'tk1', {from: account_one});
+            this.contract = await SolnSquareVerifier.new(Verifier.address,'Token2', 'tk2', {from: account_one});
         })
 
         // it('Should get token balance', async function(){
@@ -38,20 +38,20 @@ let correctProof = {
         it('Test if an ERC721 token can be minted for contract -SolnSquareVerifier', async function(){
             
             try{
-                await this.contract.minNFT(account_two, 1, correctProof.A, correctProof.B, correctProof.C, correctProof.input);
+                await this.contract.minNFT(account_two, 2, correctProof.A, correctProof.B, correctProof.C, correctProof.input);
 
             }catch(err){
                 console.log(err);
             }
 
-            let owner = await this.contract.ownerOf(1);
+            let owner = await this.contract.ownerOf(2);
             assert.equal(owner, account_two, "Owner should be acc1");
 
-            let expectedURI = 'https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/1';
+            let expectedURI = 'https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/2';
             let URI = '';
 
             try{
-                URI = await this.contract.tokenURI(1);
+                URI = await this.contract.tokenURI(2);
             }catch(err){
                 console.log(err);
             }
@@ -71,7 +71,7 @@ let correctProof = {
             
             let result = false;
             try{
-                await this.contract.minNFT(account_two, 2, correctProof.A, correctProof.B, correctProof.C, correctProof.input);
+                await this.contract.minNFT(account_two, 3, correctProof.A, correctProof.B, correctProof.C, correctProof.input);
             }catch(err){
                 console.log(err);
             }
@@ -88,7 +88,7 @@ let correctProof = {
 
         it('mint a token with existed solution', async function(){
             try{
-                await this.contract.minNFT(account_two, 1, correctProof.A, correctProof.B, correctProof.C, correctProof.input);
+                await this.contract.minNFT(account_two, 2, correctProof.A, correctProof.B, correctProof.C, correctProof.input);
             }catch(err){
                 console.log(err);
             }
@@ -96,9 +96,9 @@ let correctProof = {
             let mintAgain = true;
 
             try {
-                await this.contract.minNFT(account_two, 1, correctProof.A, correctProof.B, correctProof.C, correctProof.input);
+                await this.contract.minNFT(account_two, 2, correctProof.A, correctProof.B, correctProof.C, correctProof.input);
             } catch (err) {
-             console.log(err); 
+             //console.log(err); 
              mintAgain = false;  
             }
 
